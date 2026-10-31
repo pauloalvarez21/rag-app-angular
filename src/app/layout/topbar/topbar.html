@@ -1,0 +1,14 @@
+<header class="topbar">
+  <nav class="breadcrumb" aria-label="Ruta actual">
+    <span class="breadcrumb__root">Workspace</span>
+    <app-icon name="chevron-right" [size]="14" class="breadcrumb__sep" />
+    <strong class="breadcrumb__current">{{ section() }}</strong>
+  </nav>
+
+  <div class="topbar__meta">
+    <span class="status-pill" [class.status-pill--offline]="!online()">
+      <span class="status-pill__dot"></span>
+      {{ online() ? 'API operativa' : 'API sin conexión' }}
+    </span>
+  </div>
+</header>

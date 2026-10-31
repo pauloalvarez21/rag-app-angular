@@ -1,0 +1,126 @@
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  max-width: min(85%, 720px);
+}
+
+.message--user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.message__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-ink-soft);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.message--user .message__avatar {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.message__body {
+  min-width: 0;
+}
+
+.message__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  margin-bottom: 0.25rem;
+  padding: 0 0.15rem;
+}
+
+.message--user .message__head {
+  justify-content: flex-end;
+}
+
+.message__author {
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--color-ink-soft);
+}
+
+.message__time {
+  font-size: 0.68rem;
+  color: var(--color-muted);
+}
+
+.message__content {
+  padding: 0.7rem 0.95rem;
+  border-radius: 4px 14px 14px 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--color-ink);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.message--user .message__content {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  border-radius: 14px 4px 14px 14px;
+}
+
+.message--error .message__content {
+  background: var(--color-danger-soft);
+  border-color: color-mix(in srgb, var(--color-danger) 25%, transparent);
+  color: var(--color-danger);
+}
+
+.message__retry {
+  margin-top: 0.5rem;
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+  padding: 0 0.15rem;
+}
+
+.sources__label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-right: 0.15rem;
+}
+
+.source {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.2rem 0.45rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: 0.68rem;
+  color: var(--color-ink-soft);
+}
+
+@media (max-width: 640px) {
+  .message {
+    max-width: 100%;
+  }
+}

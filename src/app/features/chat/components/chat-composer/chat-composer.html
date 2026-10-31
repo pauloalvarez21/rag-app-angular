@@ -1,0 +1,27 @@
+<form class="composer" (submit)="onSubmit($event)">
+  <div class="composer__field">
+    <label class="sr-only" for="chat-input">Escribe tu pregunta</label>
+    <textarea
+      #textarea
+      id="chat-input"
+      class="textarea composer__input"
+      rows="1"
+      placeholder="Pregunta sobre tus documentos…"
+      [value]="draft()"
+      [attr.maxlength]="maxLength()"
+      [disabled]="disabled()"
+      (input)="onInput($event)"
+      (keydown)="onKeydown($event)"
+    ></textarea>
+
+    <div class="composer__meta">
+      <span>Enter para enviar · Shift + Enter para nueva línea</span>
+      <span>{{ draft().length }}/{{ maxLength() }}</span>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn--primary composer__send" [disabled]="!canSend()">
+    <app-icon name="send" [size]="16" />
+    <span>Enviar</span>
+  </button>
+</form>

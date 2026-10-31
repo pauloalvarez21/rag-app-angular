@@ -1,0 +1,58 @@
+.composer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+}
+
+.composer__field {
+  flex: 1;
+  min-width: 0;
+}
+
+.composer__input {
+  min-height: 44px;
+  max-height: 160px;
+  padding: 0.7rem 0.85rem;
+  resize: none;
+  line-height: 1.5;
+  background: var(--color-surface);
+}
+
+.composer__input:disabled {
+  background: var(--color-surface-muted);
+  cursor: not-allowed;
+}
+
+.composer__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.35rem;
+  padding: 0 0.15rem;
+  font-size: 0.68rem;
+  color: var(--color-muted);
+}
+
+.composer__send {
+  height: 44px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .composer__send span {
+    display: none;
+  }
+
+  .composer__send {
+    width: 44px;
+    padding: 0;
+  }
+
+  .composer__meta span:first-child {
+    display: none;
+  }
+
+  .composer__meta {
+    justify-content: flex-end;
+  }
+}

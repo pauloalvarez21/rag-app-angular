@@ -1,0 +1,36 @@
+<article class="message" [class.message--user]="isUser()" [class.message--error]="message().error">
+  <span class="message__avatar" aria-hidden="true">{{ isUser() ? 'TÚ' : 'IA' }}</span>
+
+  <div class="message__body">
+    <header class="message__head">
+      <span class="message__author">{{ isUser() ? 'Tú' : 'Asistente' }}</span>
+      <time class="message__time">{{ message().timestamp | date: 'HH:mm' }}</time>
+    </header>
+
+    @if (isUser()) {
+      <div class="message__content">{{ message().content }}</div>
+    } @else {
+      <div class="message__content markdown" [innerHTML]="message().content | markdown"></div>
+    }
+
+    @if (message().error) {
+      <button
+        type="button"
+        class="btn btn--secondary btn--sm message__retry"
+        (click)="retry.emit()"
+      >
+        <app-icon name="refresh" [size]="14" />
+        Reintentar
+      </button>
+    }
+
+    @if (message().sources?.length) {
+      <div class="sources">
+        <span class="sources__label">Fuentes</span>
+        @for (source of message().sources; track source) {
+          <span class="source" [title]="source">{{ source }}</span>
+        }
+      </div>
+    }
+  </div>
+</article>

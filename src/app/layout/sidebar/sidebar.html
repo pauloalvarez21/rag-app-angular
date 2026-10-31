@@ -1,0 +1,31 @@
+<aside class="sidebar">
+  <a class="brand" routerLink="/documents" aria-label="RAG Console">
+    <span class="brand__mark">
+      <app-icon name="sparkles" [size]="19" />
+    </span>
+    <span class="brand__text">
+      <strong>RAG Console</strong>
+      <small>Knowledge workspace</small>
+    </span>
+  </a>
+
+  <nav class="nav" aria-label="Navegación principal">
+    <span class="nav__label">Workspace</span>
+    <a class="nav__link" routerLink="/documents" routerLinkActive="is-active">
+      <app-icon name="documents" [size]="18" />
+      <span>Documentos</span>
+    </a>
+    <a class="nav__link" routerLink="/chat" routerLinkActive="is-active">
+      <app-icon name="chat" [size]="18" />
+      <span>Chat</span>
+    </a>
+  </nav>
+
+  <div class="sidebar__footer">
+    <div class="status" [class.status--offline]="!online()">
+      <span class="status__dot"></span>
+      <span>{{ online() ? 'Backend conectado' : 'Sin conexión' }}</span>
+    </div>
+    <p class="version">RAG Console · v1.0</p>
+  </div>
+</aside>

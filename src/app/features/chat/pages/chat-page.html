@@ -1,0 +1,39 @@
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Asistente</span>
+    <h1>Chat</h1>
+    <p>Pregunta en lenguaje natural sobre los documentos indexados.</p>
+  </div>
+
+  <button type="button" class="btn btn--secondary" [disabled]="!chat.canClear()" (click)="clear()">
+    <app-icon name="plus" [size]="16" />
+    Nueva conversación
+  </button>
+</div>
+
+<section class="chat panel">
+  <div #scroll class="chat__messages">
+    @for (message of chat.messages(); track message.id) {
+      <app-message-bubble [message]="message" (retry)="onRetry()" />
+    }
+
+    @if (chat.sending()) {
+      <div class="typing" role="status" aria-live="polite">
+        <span class="typing__avatar" aria-hidden="true">IA</span>
+        <span class="typing__dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="typing__label">Consultando documentos…</span>
+      </div>
+    }
+  </div>
+
+  <div class="chat__composer">
+    <app-chat-composer [disabled]="chat.sending()" (send)="onSend($event)" />
+    <p class="chat__hint">
+      Las respuestas se basan únicamente en los documentos de tu base de conocimiento.
+    </p>
+  </div>
+</section>

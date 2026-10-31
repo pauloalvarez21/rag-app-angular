@@ -1,0 +1,125 @@
+<div class="page-header">
+  <div>
+    <span class="eyebrow">Base de conocimiento</span>
+    <h1>Documentos</h1>
+    <p>Sube tus PDF y construye la base sobre la que responde el asistente.</p>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn--secondary"
+    [disabled]="store.loading()"
+    (click)="store.reload()"
+  >
+    <app-icon name="refresh" [size]="16" />
+    Actualizar
+  </button>
+</div>
+
+<div class="layout">
+  <section class="panel">
+    <div class="panel__header">
+      <div>
+        <h2>Subir documento</h2>
+        <p>Se indexará automáticamente en fragmentos.</p>
+      </div>
+    </div>
+
+    <div class="panel__body">
+      <app-file-dropzone
+        [disabled]="store.uploading()"
+        (fileSelected)="onFileSelected($event)"
+        (fileRejected)="onInvalid($event)"
+      />
+
+      @if (selectedFile(); as file) {
+        <div class="file-chip">
+          <span class="file-chip__icon">
+            <app-icon name="documents" [size]="16" />
+          </span>
+          <span class="file-chip__meta">
+            <strong class="truncate" [title]="file.name">{{ file.name }}</strong>
+            <small>{{ formatSize(file.size) }}</small>
+          </span>
+          <button
+            type="button"
+            class="icon-btn"
+            aria-label="Quitar archivo"
+            [disabled]="store.uploading()"
+            (click)="clearFile()"
+          >
+            <app-icon name="close" [size]="16" />
+          </button>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn--primary btn--block"
+          [disabled]="store.uploading()"
+          (click)="upload()"
+        >
+          @if (store.uploading()) {
+            <app-spinner [size]="15" />
+            Indexando…
+          } @else {
+            <app-icon name="upload" [size]="16" />
+            Subir e indexar
+          }
+        </button>
+      }
+
+      <ul class="tips">
+        <li>
+          <app-icon name="check" [size]="14" />
+          Solo archivos PDF de hasta 10 MB.
+        </li>
+        <li>
+          <app-icon name="check" [size]="14" />
+          El documento estará disponible en el chat al terminar.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel__header">
+      <div>
+        <h2>Documentos indexados</h2>
+        <p>
+          {{ store.count() }}
+          {{ store.count() === 1 ? 'documento disponible' : 'documentos disponibles' }} en la base.
+        </p>
+      </div>
+      <app-badge variant="primary">{{ store.count() }}</app-badge>
+    </div>
+
+    <div class="panel__body panel__body--flush">
+      @if (store.loadingFirst()) {
+        <div class="skeleton-list" aria-label="Cargando documentos">
+          @for (row of [1, 2, 3]; track row) {
+            <div class="skeleton skeleton-row"></div>
+          }
+        </div>
+      } @else if (store.loadError()) {
+        <app-empty-state
+          icon="alert"
+          title="No se pudieron cargar los documentos"
+          [description]="store.loadError() ?? ''"
+        >
+          <button type="button" class="btn btn--secondary btn--sm" (click)="store.reload()">
+            <app-icon name="refresh" [size]="15" />
+            Reintentar
+          </button>
+        </app-empty-state>
+      } @else if (!store.documents().length) {
+        <app-empty-state
+          icon="database"
+          title="Aún no hay documentos"
+          description="Sube tu primer PDF para empezar a consultar la base de conocimiento."
+        />
+      } @else {
+        <app-document-table [documents]="store.documents()" (copyId)="store.copyId($event)" />
+      }
+    </div>
+  </section>
+</div>
